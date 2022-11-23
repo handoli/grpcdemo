@@ -1,0 +1,48 @@
+//protobuf 版本3
+syntax = "proto3";
+//go包名，go的空间域
+package add;
+//引用远程包的包名，如：git get github.com/xxxx/xxx 包的名称
+option go_package = "/add";
+//service定义rpc暴露的服务，服务名：“AddService”
+service AddService{
+    //rpc服务，服务名：“add” 请求参数（结构体）：AddReq  响应参数（结构体）：AddRes
+    rpc add(AddReq) returns (AddRes){}
+}
+//服务请求参数（结构体）
+message AddReq {
+    //类型 参数名 = 参数的序号（从1开始）
+    int64 a = 1;
+    int64 b = 2;
+}
+
+//服务响应参数（结构体）
+message AddRes{
+    int64 res = 1;
+}
+
+/*
+此.proto文件需要通过protoc命令来生成（.pb.go）和（_grpc.pb.go）文件
+命令：
+    protoc --go_out=. --go_opt=paths=source_relative \
+        --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+        ./add.proto
+
+    –-go_out : 指定生成的.pb.go文件存放的位置，命令中的“.”代表生成的文件就存放在当前目录。
+    -–go_opt : 可以看做是对--go_out命令的参数设置，这里设置paths=source_relative。
+
+    -–go-grpc_out : 指定生成的_grpc.pb.go文件存放的位置，命令中的“.”代表生成的文件就存放在当前目录。
+    -–go-grpc_opt : 可以看做是对--go-grpc_out命令的参数设置，这里设置paths=source_relative。
+
+    ./add.proto : 表示当前目录下的.proto文件
+
+.pb.go : 主要包含生成的服务调用的请求和响应的结构体，及结构体的序列化和反序列化代码
+
+_grpc.pb.go : 主要包含生成客户端和服务端服务调用的函数代理代码
+
+UnimplementedXxxServer结构体 : 
+    protoc命令在 _grpc.pb.go文件中生成了UnimplementedXxxServer结构体，并且*UnimplementedXxxServer实现了定义的service接口。
+    我们在grpc服务端里重写定义的service的方法时，只需定义一个结构体，并嵌入*UnimplementedXxxServer类型，也就表示实现了定义的service接口。
+使用UnimplementedXxxServer结构体的好处 : 
+    当修改了.proto文件并重新生成时，protoc命令会重新生成 UnimplementedXxxServer，并且一定是实现了定义的service接口，所以我们的grpc服务端定义的结构体同时也实现了service接口，而不必改动代码
+*/
