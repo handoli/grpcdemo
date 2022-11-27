@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package serverStream;
+
+option go_package = "/serverStream";
+
+service ServerStreamService{
+    rpc ServerStream(ServerStreamReq) returns (stream ServerStreamRes){}
+}
+
+message ServerStreamReq{
+    //类型： 1:门派 2:技能
+    int64 type = 1;
+    //返回的数量
+    int64 number = 2;
+}
+
+message ServerStreamRes{
+    string res = 1;
+}
+
