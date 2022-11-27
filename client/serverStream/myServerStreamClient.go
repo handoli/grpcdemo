@@ -19,7 +19,7 @@ func createClient(){
 	c := serverStream.NewServerStreamServiceClient(conn)
 	//定义封装gprc客户端请求参数
 	req := serverStream.ServerStreamReq{
-		Type: 2,
+		Type: 5,
 		Number: 3,
 	}
 	//调用远程grpc服务，并取得响应结果

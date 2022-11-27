@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package clientStream;
+
+option go_package = "/clientStream";
+
+service ClientStreamService{
+    rpc ClientStream(stream ClientStreamReq) returns (ClientStreamRes){}
+}
+
+message ClientStreamReq{
+    //类型： 1:门派 2:技能
+    int64 type = 1;
+    //返回的数量
+    string msg = 2;
+}
+
+message ClientStreamRes{
+    string res = 1;
+}
+
