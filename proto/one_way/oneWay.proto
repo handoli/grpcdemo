@@ -1,23 +1,23 @@
 //protobuf 版本3
 syntax = "proto3";
 //go包名，go的空间域
-package single;
+package oneWay;
 //引用远程包的包名，如：git get github.com/xxxx/xxx 包的名称
-option go_package = "/single";
+option go_package = "/oneWay";
 //service定义rpc暴露的服务，服务名：“AddService”
-service SingleService{
+service OneWayService{
     //rpc服务，服务名：“add” 请求参数（结构体）：AddReq  响应参数（结构体）：AddRes
-    rpc Single(SingleReq) returns (SingleRes){}
+    rpc OneWay(OneWayReq) returns (OneWayRes){}
 }
 //服务请求参数（结构体）
-message SingleReq {
+message OneWayReq {
     //类型 参数名 = 参数的序号（从1开始）
     int64 a = 1;
     int64 b = 2;
 }
 
 //服务响应参数（结构体）
-message SingleRes{
+message OneWayRes{
     int64 res = 1;
 }
 
@@ -26,7 +26,7 @@ message SingleRes{
 命令：
     protoc --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-        ./single.proto
+        ./oneWay.proto
 
     –-go_out : 指定生成的.pb.go文件存放的位置，命令中的“.”代表生成的文件就存放在当前目录。
     -–go_opt : 可以看做是对--go_out命令的参数设置，这里设置paths=source_relative。

@@ -6,12 +6,13 @@ import (
 	"log"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 //创建gprc客户端，请求grpc服务端
 func createClient(){
 	//定义处理gprc请求的服务端地址，可以设置一些连接参数
-	conn,err := grpc.Dial("127.0.0.1:9997", grpc.WithInsecure())
+	conn,err := grpc.Dial("127.0.0.1:9997", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
         log.Fatalf("net.Connect err: %v", err)
     }

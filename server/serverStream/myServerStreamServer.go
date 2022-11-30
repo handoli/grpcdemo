@@ -25,7 +25,7 @@ import (
 
 
 type MyServerStreamService struct{
-	serverStream.ServerStreamServiceServer
+	serverStream.UnimplementedServerStreamServiceServer
 }
 
 func (MyServerStreamService) ServerStream(req *serverStream.ServerStreamReq, s serverStream.ServerStreamService_ServerStreamServer) error {
